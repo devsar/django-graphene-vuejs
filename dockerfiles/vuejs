@@ -1,0 +1,19 @@
+FROM node:lts-alpine
+
+WORKDIR /opt/frontend
+
+# copy both 'package.json' and 'package-lock.json' (if available)
+COPY src/frontend/package*.json ./
+
+# install project dependencies
+RUN npm install
+
+COPY ./src/frontend/ .
+
+RUN npm run
+
+EXPOSE 8080
+
+ENTRYPOINT ["npm", "run"]
+
+CMD ["dev"]

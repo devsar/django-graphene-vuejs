@@ -1,0 +1,8 @@
+*.pyc
+.vscode
+src/api/db.sqlite3
+src/frontend/node_modules
+src/frontend/dist
+src/frontend/.config/
+src/frontend/.npm/
+.cache
