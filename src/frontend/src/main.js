@@ -9,12 +9,15 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@mdi/font/css/materialdesignicons.css'
 
+import apolloProvider from './plugins/apollo'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  apolloProvider: apolloProvider,
   components: { App },
   template: '<App/>'
 })
