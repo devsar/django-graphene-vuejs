@@ -1,5 +1,5 @@
 # About me 
-This will setup, using docker-compose, a basic Django + Django Graphene + Vuejs `(vue-cli project)` project.
+This will setup, using docker-compose, a basic Django + Django Graphene + Vuejs `(vue-cli project)` + Vuetify + Apollo project.
 
 # Status:
 
