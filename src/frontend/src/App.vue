@@ -7,30 +7,38 @@
           <div>Loading...</div>
         </div>
       </template>
-      <template v-if="users.length">
+      <template v-if="users">
         <h3>User list</h3>
         <p :key="idx" v-for="(user, idx) in users">{{ user.email }}</p>
+        <hr />
+        <input type="text" name="username" id="username" v-model="username" placeholder="username">
+        <input type="text" name="password" id="password" v-model="password" placeholder="password">
+        <input type="button" value="Login" @click="login"/>
+      </template>
+      <template v-if="token">
+        <p>Token is: {{ token }}</p>
       </template>
       <template v-else>
         <template v-if="error">
           <div class="flex w-100 h-100 items-center justify-center pt7">
-            <div>An unexpected error occurred</div>
+            <div>An unexpected error occurred: {{ error }} </div>
           </div>
         </template>
-        <template v-else>
-          <h3>{hello}</h3>
-        </template>
       </template>
+    </div>
+    <div>
+
     </div>
   </div>
 </template>
 
 <script>
   import gql from 'graphql-tag'
-  const HELLO_QUERY = gql(`
-    query {
-      users {
-        email
+
+  const LOGIN_QUERY = gql(`
+    mutation ($username: String!, $password: String!) {
+      tokenAuth(username:$username, password:$password){
+        token
       }
     }
   `)
@@ -40,23 +48,39 @@
 
     // data props to component
     data: () => ({
-      hello: String,
+      hello: '',
+      username: '',
+      password: '',
+      token: '',
       loading: 0,
-      error: String,
+      error: '',
       users: [],
     }),
 
-    // Apollo GraphQL
-    apollo: {
-      users: {
-        query: HELLO_QUERY,
-        loadingKey: 'loading',
-        error(error) {
-          console.error('We\'ve got an error!', error)
-          this.error = error
-        }
-      },
-    }
+    methods: {
+
+      async login () {
+        var result
+
+        try {
+          result = await this.$apollo.mutate({
+            mutation: LOGIN_QUERY,
+            variables: {
+              username: this.username,
+              password: this.password
+            }
+          })
+        } catch (error) {
+          this.token = ''
+          alert(error)
+          return
+        } 
+
+        this.token = result.data.tokenAuth.token
+      }
+
+    },
+
   }
 </script>
 
