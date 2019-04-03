@@ -14,6 +14,7 @@
     "apollo-link-http": "1.5.14",
     "graphql": "0.13.2",
     "graphql-tag": "2.10.1",
+    "js-cookie": "^2.2.0",
     "vue": "2.6.10",
     "vue-apollo": "3.0.0-beta.28",
     "vue-router": "3.0.2",
