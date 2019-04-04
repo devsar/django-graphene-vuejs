@@ -31,6 +31,11 @@ class CreateUser(graphene.Mutation):
     email = graphene.String(required=True)
 
   def mutate(self, info, username, password, email):
+
+    user = info.context.user
+    if user.is_anonymous:
+      raise Exception('Not logged in!')
+
     user = get_user_model()(
       username=username,
       email=email
