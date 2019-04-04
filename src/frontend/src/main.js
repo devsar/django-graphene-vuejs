@@ -5,7 +5,7 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 
-const httpLink = new HttpLink({ uri: 'http://localhost:4000/' })
+const httpLink = new HttpLink({ uri: 'http://localhost:8000/' })
 
 // apollo client setup
 const client = new ApolloClient({

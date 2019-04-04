@@ -1,54 +1,33 @@
 <template>
   <div id="app">
     <div class="App-header">
-      <img src="./logo.svg" class="App-logo" alt="logo" />
-      <h3>Welcome to React + GraphQL + Apollo minimal boilerplate</h3>
-      <template v-if="loading > 0">
-        <div class="flex w-100 h-100 items-center justify-center pt7">
-          <div>Loading...</div>
-        </div>
-      </template>
-      <template v-else>
-        <template v-if="error">
-          <div class="flex w-100 h-100 items-center justify-center pt7">
-            <div>An unexpected error occurred</div>
-          </div>
-        </template>
-        <template v-else>
-          <h3>{hello}</h3>
-        </template>
-      </template>
+      <h2>Welcome to React + GraphQL + Apollo minimal boilerplate</h2>
     </div>
+    <p>Here in the <b>master</b> branch you will find a minimal <b>vuejs+apollo</b> project 
+    from where you can start working on. 
+    Be sure to setup the correct graphql API endpoint at <b>main.js</b></p>
+    <p>Below you will find a list of branches with examples that maybe will be useful for you
+    as a reference.</p>
+    <h2>List of Branches</h2>
+    <h3>jwt-auth</h3>
+    <p>Use this branch to see an example of using <b>VueJS + Apollo</b> 
+    consuming the backend and using <b>JWT</b> to access API resources
+    where the user must be authenticated</p>
   </div>
 </template>
 
 <script>
   import gql from 'graphql-tag'
-  const HELLO_QUERY = gql `
-    query hello($name: String) {
-      hello(name: $name)
-    }
-  `
+
   export default {
     name: 'app',
 
     // data props to component
     data: () => ({
-      hello: String,
-      loading: 0,
-      error: String,
     }),
 
     // Apollo GraphQL
     apollo: {
-      feed: {
-        query: HELLO_QUERY,
-        loadingKey: 'loading',
-        error(error) {
-          console.error('We\'ve got an error!', error)
-          this.error = error
-        }
-      },
     }
   }
 </script>
@@ -72,13 +51,14 @@ body {
 
 .App-header {
   background-color: #222;
-  height: 250px;
+  height: 125px;
   padding: 20px;
   color: white;
 }
 
 .App-title {
   font-size: 1.5em;
+  margin-left: 20px;
 }
 
 .App-intro {
@@ -86,7 +66,7 @@ body {
   text-align: 'center';
 }
 
-h3 {
+h3, h2, p {
   text-align: center;
   padding:10px;
 }
