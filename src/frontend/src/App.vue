@@ -8,15 +8,22 @@
         </div>
       </template>
       <template v-if="users">
-        <h3>User list</h3>
-        <p :key="idx" v-for="(user, idx) in users">{{ user.email }}</p>
         <hr />
         <input type="text" name="username" id="username" v-model="username" placeholder="username">
         <input type="text" name="password" id="password" v-model="password" placeholder="password">
         <input type="button" value="Login" @click="login"/>
+        <input type="button" value="My info" @click="me"/>
       </template>
       <template v-if="token">
         <p>Token is: {{ token }}</p>
+      </template>
+      <template v-if="token">
+        <div>
+          <h3>Logged as: {{ this.username }}</h3>
+          <p>First name: {{ this.firstName }}</p>
+          <p>Last name: {{ this.lastName }}</p>
+          <p>Email: {{ this.email }}</p>
+        </div>
       </template>
       <template v-else>
         <template v-if="error">
@@ -51,6 +58,9 @@
       hello: '',
       username: '',
       password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
       token: '',
       loading: 0,
       error: '',
@@ -61,6 +71,7 @@
 
       async login () {
         var result
+        var token
 
         try {
           result = await this.$apollo.mutate({
@@ -76,7 +87,32 @@
           return
         } 
 
-        this.token = result.data.tokenAuth.token
+        token = result.data.tokenAuth.token
+        localStorage.setItem('token', token)
+        this.token = token
+      },
+
+      async me () {
+        var result
+
+        try {
+          result = await this.$apollo.query({
+            query: gql(`
+              query {
+                me {
+                  firstName
+                  lastName
+                  email
+                }
+              }
+            `)
+          })
+        } catch (error) {
+          alert(error)
+        }
+        this.firstName = result.data.me.firstName
+        this.lastName = result.data.me.lastName
+        this.email = result.data.me.email
       }
 
     },
