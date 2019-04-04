@@ -1,5 +1,11 @@
 # About me 
-This will setup, using docker-compose, a basic Django + Django Graphene + Vuejs `(vue-cli project)` + Vuetify + Vue Apollo project.
+
+This project will setup (using docker-compose):
+
+- A Django project with [Django Graphene](https://docs.graphene-python.org/projects/django/en/latest/), PostgreSQL and CORS ready to be used (basic configuration). It comes with a basic GraphQL API with some `resolvers` and `mutations` (take a look at [User schema](src/backend/user/schema.py).
+- A Vuejs project generated with [graphql-cli](https://github.com/graphql-cli/graphql-cli) using the minimal vue template. It also uses Vue Apollo and JWT.
+
+**WARNING**: The frontend saves the `jwt` token in the local storage. This is a bad and risky practice, dont do this on prod. For more info you can read: https://www.rdegges.com/2018/please-stop-using-local-storage/
 
 # Status:
 
@@ -96,12 +102,3 @@ DRF container uses `python:latest` (more info at `https://hub.docker.com/_/pytho
   - In the same directory where `Pipfile` and `Pipfile.lock` exists, run: `pipenv install`
   - Done, now you are able to add your bugs at `src/backend`
 
-# About the frontend 
-
-## (optional) Install `vue-cli` locally on your host
-
-  - Create a directory where `npm i -g ...` will be installed. Run: `mkdir ~/.npm-global`
-  - Let `npm` where to find installed packages. Run: `npm config set prefix '~/.npm-global'`
-  - Let your `bash` knows where `excecutable` installed by `npm` are. Run: ` echo "export PATH=~/.npm-global/bin:$PATH" >> ~/.bashrc `. Apply changes made on `$PATH` running: `source ~/.bashrc`, or open a new terminal. 
-  - Install `@vue-cli`, run: `npm install -g @vue/cli`
-  - Install `@vue/cli-init`, run: `npm install -g @vue/cli-init`
