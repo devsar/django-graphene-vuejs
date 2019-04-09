@@ -12,6 +12,7 @@ django = "*"
 django-filter = "*"
 django-graphql-jwt = "*"
 graphene = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.7"
