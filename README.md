@@ -9,11 +9,11 @@ This will setup, using docker-compose, a basic Django + Django Grahene + Vuejs `
 # First steps 
 Clone me:
 
-  - `git clone https://github.com/devsar/django-vuejs.git`
+  - `git clone https://github.com/devsar/django-graphene-vuejs.git`
 
 Install frontend requirements: 
 
-  - `cd django-vuejs && cd src/frontend && npm install && cd -`
+  - `cd django-graphene-vuejs && cd src/frontend && npm install && cd -`
 
 Let docker-compose build the containers:
 
