@@ -1,5 +1,5 @@
 # About me 
-This will setup, using docker-compose, a basic Django + Django Graphene + Vuejs `(vue-cli project)` project.
+This will setup, using docker-compose, a basic Django + Vuejs `(vue-cli project)` project.
 
 # Status:
 
@@ -7,17 +7,24 @@ This will setup, using docker-compose, a basic Django + Django Graphene + Vuejs 
 - [ ]  Ready to be used on Production (nginx conf, prod settings, etc) 
 
 # First steps 
-Start (and build if needed) containers with the command:
+Clone me:
+
+  - `git clone https://github.com/devsar/django-vuejs.git`
+
+Install frontend requirements: 
+
+  - `cd django-vuejs && cd src/frontend && npm install && cd -`
+
+Let docker-compose build the containers:
+
   - `docker-compose up --build`
 
 Create Django tables on DB:
   - `docker-compose run backend migrate`
 
 Create super user:
-  - `docker-compose run backend createsuperuser`
+  - `docker-compose run backend django-admin createsuperuser`
 
-Start all containers:
-  - `docker-compose up`
 
 # How to use it
 First, be sure to complete `First steps` (described above).
@@ -31,8 +38,8 @@ Please fill a bug :)
 
   - File `docker-compose.yml`: Orchestrate all containers settings
   - Directory `dockerfiles`: 
-    - File `backend`: Dockerfile to setup Django + GraphQL
-    - File `vuejs`: Dockerfile to setup Vuejs + Webpack + NPM + etc...
+    - File `backend`: Dockerfile to setup Django
+    - File `vuejs`: Dockerfile to install Vuejs requirements
   - File `Pipfile` and `Pipfile.lock`: [Pipenv](https://pipenv.readthedocs.io/en/latest/) files
   - File `README.md`: You are here :)
   - Directory `src`:
@@ -98,7 +105,11 @@ DRF container uses `python:latest` (more info at `https://hub.docker.com/_/pytho
 
 # About the frontend 
 
-## (optional) Install `vue-cli` locally on your host
+To start from scratch, feel free to remove `src/frontend` and create a new `vue` project using the `vue-cli` command, for example:
+
+  `bash$: rm -rf ./src/frontend && cd ./src && vue create frontend`
+
+## (optional) How to install `vue-cli` locally on your host
 
   - Create a directory where `npm i -g ...` will be installed. Run: `mkdir ~/.npm-global`
   - Let `npm` where to find installed packages. Run: `npm config set prefix '~/.npm-global'`
