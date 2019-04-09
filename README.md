@@ -1,5 +1,5 @@
 # About me 
-This will setup, using docker-compose, a basic Django + Vuejs `(vue-cli project)` project.
+This will setup, using docker-compose, a basic Django + Django Grahene + Vuejs `(vue-cli project)` project.
 
 # Status:
 
