@@ -11,20 +11,19 @@ Clone me:
 
   - `git clone https://github.com/devsar/django-graphene-vuejs.git`
 
-Install frontend requirements: 
+Change dir to cloned directory and excecute autoinstall.sh script:
 
-  - `cd django-graphene-vuejs && cd src/frontend && npm install && cd -`
+  - `cd django-graphene-vuejs && ./autoinstall.sh`
 
-Let docker-compose build the containers:
+You will end with Django running on port 8000 and the Vuejs on port 8080.
 
-  - `docker-compose up --build`
+## To setup Django DB:
 
 Create Django tables on DB:
   - `docker-compose run backend migrate`
 
 Create super user:
   - `docker-compose run backend django-admin createsuperuser`
-
 
 # How to use it
 First, be sure to complete `First steps` (described above).
