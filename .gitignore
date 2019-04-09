@@ -6,3 +6,4 @@ src/frontend/dist
 src/frontend/.config/
 src/frontend/.npm/
 .cache
+.env
