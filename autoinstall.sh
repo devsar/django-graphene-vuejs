@@ -8,6 +8,5 @@ if ! [ -x "$(command -v npm)" ]; then
   exit 1
 fi
 
-PWD=`pwd`
-cd $PWD/src/frontend && npm i && cd $PWD
+cd src/frontend && npm i && cd -
 docker-compose up --build
