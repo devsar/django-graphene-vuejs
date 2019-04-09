@@ -72,7 +72,6 @@
         var token
 
         try {
-          console.log('apoollo', this.$apollo)
           result = await this.$apollo.mutate({
             mutation: LOGIN_QUERY,
             variables: {
@@ -92,11 +91,9 @@
       },
 
       async me () {
-        console.log('click!')
         var result
 
         try {
-          console.log('apoollo', this.$apollo)
           result = await this.$apollo.query({
             query: gql(`
               query {
@@ -107,7 +104,6 @@
             `)
           })
         } catch (error) {
-          console.log('error click!')
           alert(error)
           return
         }
