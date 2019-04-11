@@ -45,5 +45,32 @@ class CreateUser(graphene.Mutation):
     return CreateUser(user=user)
 
 
+class UpdateUser(graphene.Mutation):
+  user =  graphene.Field(UserType)
+
+  class Arguments:
+    first_name = graphene.String(required=False)
+    last_name = graphene.String(required=False)
+    email = graphene.String(required=False)
+
+  def mutate(self, info, first_name=None, last_name=None, email=None):
+    user = info.context.user
+    if user.is_anonymous:
+      raise Exception('Not logged in!')
+
+    if first_name:
+      user.first_name = first_name
+
+    if last_name:
+      user.last_name = last_name
+
+    if email:
+      user.email = email
+
+    user.save()
+    return UpdateUser(user=user)
+
+
 class Mutation(graphene.ObjectType):
   create_user = CreateUser.Field()
+  update_user = UpdateUser.Field()
