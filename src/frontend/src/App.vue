@@ -1,38 +1,35 @@
 <template>
-  <div id="app">
-    <div class="App-header">
-      <h3>Welcome to Django + Django Graphene + Vue Apollo minimal boilerplate</h3>
-      <template v-if="loading > 0">
-        <div class="flex w-100 h-100 items-center justify-center pt7">
-          <div>Loading...</div>
-        </div>
-      </template>
-      <template v-if="users">
+  <div id="app" class="pure-g">
+    <div class="App-header pure-u-1">
+      <h1>Welcome to Django + Django Graphene + Vue Apollo minimal boilerplate</h1>
         <hr />
-        <input type="text" name="username" id="username" v-model="username" placeholder="username">
-        <input type="text" name="password" id="password" v-model="password" placeholder="password">
-        <input type="button" value="Login" @click="login"/>
-        <input type="button" value="My info" @click="me"/>
-      </template>
-      <template v-if="token">
-        <p>Token is: {{ token }}</p>
-      </template>
-      <template v-if="token">
-        <div>
-          <h3>Logged as: {{ this.username }}</h3>
-          <p>Email: {{ this.email }}</p>
-        </div>
-      </template>
-      <template v-else>
-        <template v-if="error">
-          <div class="flex w-100 h-100 items-center justify-center pt7">
-            <div>An unexpected error occurred: {{ error }} </div>
-          </div>
-        </template>
-      </template>
-    </div>
-    <div>
-
+        <h2>Login</h2>
+        <form class="pure-form pure-form-aligned">
+          <fieldset>
+            <input type="text" name="username" id="username" v-model="username" placeholder="username">
+            <input type="text" name="password" id="password" v-model="password" placeholder="password">
+            <input type="button" class="pure-button pure-button-primary" value="Login" @click="login"/>
+          </fieldset>
+        </form>
+        <p v-if="token">JWT Token is: {{ token }}</p>
+        <p v-if="token">The token is saved in a httpOnly cookie, check that in the chrome developer tools (tab Application -> Cookies)</p>
+        <hr />
+        <h2>Get a token to fetch the following values</h2>
+        <p>Email: {{ me.email }}</p>
+        <p>My First Name: {{ me.firstName }}</p>
+        <p>My Last Name: {{ me.lastName }}</p>
+        <p>My ID: {{ me.id }}</p>
+        <hr />
+        <h2>Update user values on DB</h2>
+        <p>Apollo client will send the mutation (update the DB) and update its cache (that will update user info above):</p>
+        <form class="pure-form">
+          <fieldset>
+            <input type="text" name="newname" id="newname" v-model="form.name" placeholder="My new name">
+            <input type="text" name="newlastname" id="newlastname" v-model="form.lastname" placeholder="My new last name">
+            <input type="text" name="newemail" id="newemail" v-model="form.email" placeholder="My new email">
+            <input type="button" class="pure-button pure-button-primary" value="Update user info" @click="updateUser"/>
+          </fieldset>
+        </form>
     </div>
   </div>
 </template>
@@ -48,22 +45,58 @@
     }
   `)
 
+  const UPDATE_USER = gql(`
+    mutation ($firstname: String, $lastname: String, $email: String) {
+      updateUser(firstName:$firstname, lastName:$lastname, email:$email){
+        user {
+          id
+          firstName
+          lastName
+          email
+        }
+      }
+    }
+  `)
+
   export default {
     name: 'app',
 
     // data props to component
     data: () => ({
-      hello: '',
       username: '',
       password: '',
-      firstName: '',
-      lastName: '',
-      email: '',
       token: '',
-      loading: 0,
-      error: '',
-      users: [],
+      form: {
+        name: '',
+        lastanme: '',
+        email: ''
+      },
+      me: {
+        firstname: '',
+        lastName: '',
+        email: '',
+        id: '',
+      }
     }),
+
+    apollo: {
+      me: {
+        query: gql(`
+          query {
+            me {
+              id
+              firstName 
+              lastName
+              email
+            }
+          }
+        `),
+        // Disable the query
+        skip () {
+          return !this.token
+        },
+      }
+    },
 
     methods: {
 
@@ -90,25 +123,22 @@
         this.token = token
       },
 
-      async me () {
-        var result
+      async updateUser () {
 
         try {
-          result = await this.$apollo.query({
-            query: gql(`
-              query {
-                me {
-                  email
-                }
-              }
-            `)
+          await this.$apollo.mutate({
+            mutation: UPDATE_USER, 
+            variables: {
+              firstname: this.form.name || this.me.firstname,
+              lastname: this.form.lastname || this.me.lastname,
+              email: this.form.email || this.me.email
+            }
           })
         } catch (error) {
           alert(error)
           return
-        }
-        this.email = result.data.me.email
-      }
+        } 
+      },
 
     },
 
